@@ -31,7 +31,7 @@ interface RealtimeTaskDeleted {
 
 interface PresenceMember {
   user_id: string
-  user_info: {
+  user_info?: {
     name: string
     avatar?: string
   }
@@ -162,11 +162,11 @@ export function TaskBoard({ projectId, initialTasks, currentUserId }: TaskBoardP
                   <Avatar
                     key={member.user_id}
                     className="h-6 w-6 border-2 border-background"
-                    title={member.user_info.name}
+                    title={member.user_info?.name ?? ''}
                   >
-                    <AvatarImage src={member.user_info.avatar} />
+                    <AvatarImage src={member.user_info?.avatar} />
                     <AvatarFallback className="text-[10px]">
-                      {member.user_info.name?.charAt(0).toUpperCase()}
+                      {member.user_info?.name?.charAt(0).toUpperCase() ?? '?'}
                     </AvatarFallback>
                   </Avatar>
                 ))}

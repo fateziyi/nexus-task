@@ -1,10 +1,14 @@
 'use client'
 
+// clerk-nav-section.tsx — 客户端组件
+// 由于 Navbar 是客户端组件（避免 Radix UI hydration mismatch），
+// 此组件也须为客户端组件，使用 useAuth() 替代 <Show>（<Show> 是 async Server Component）
 import React from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { UserButton, useAuth } from '@clerk/nextjs'
+import { UserButton, SignInButton, SignUpButton, useAuth } from '@clerk/nextjs'
 import { LayoutDashboard, FolderKanban } from 'lucide-react'
+import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 
 const navItems = [
@@ -12,17 +16,14 @@ const navItems = [
   { href: '/projects', label: '项目', icon: FolderKanban },
 ]
 
-/**
- * 仅在 ClerkProvider 内部使用的导航部分（含 useAuth）
- * 必须由 AuthProvider 有条件地渲染，确保 ClerkProvider 已存在
- */
 export function ClerkNavSection() {
   const { isSignedIn } = useAuth()
   const pathname = usePathname()
 
-  return (
-    <>
-      {isSignedIn && (
+  if (isSignedIn) {
+    return (
+      <>
+        {/* 已登录：导航链接 */}
         <nav className="flex items-center gap-1 flex-1">
           {navItems.map((item) => {
             const Icon = item.icon
@@ -44,12 +45,22 @@ export function ClerkNavSection() {
             )
           })}
         </nav>
-      )}
-      {isSignedIn && (
-        <div className="flex items-center">
+        {/* 用户头像 */}
+        <div className="flex items-center ml-2">
           <UserButton />
         </div>
-      )}
-    </>
+      </>
+    )
+  }
+
+  return (
+    <div className="flex items-center gap-2 ml-auto">
+      <SignInButton mode="modal">
+        <Button variant="ghost" size="sm">登录</Button>
+      </SignInButton>
+      <SignUpButton mode="modal">
+        <Button size="sm">注册</Button>
+      </SignUpButton>
+    </div>
   )
 }

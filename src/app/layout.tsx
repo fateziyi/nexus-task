@@ -3,8 +3,8 @@ import type { Metadata } from "next"
 import { Inter } from "next/font/google"
 import "./globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
-import { AuthProvider } from "@/components/auth-provider"
 import { Navbar } from "@/components/navbar"
+import { ClerkProvider } from "@clerk/nextjs"
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -19,7 +19,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <AuthProvider>
+    <ClerkProvider>
       {/* codeflicker-fix: UI-Issue-012/agek6tph1o7sjkmd3vvy */}
       <html lang="zh-CN" suppressHydrationWarning>
         <body className={inter.className}>
@@ -36,6 +36,6 @@ export default function RootLayout({
           </ThemeProvider>
         </body>
       </html>
-    </AuthProvider>
+    </ClerkProvider>
   )
 }

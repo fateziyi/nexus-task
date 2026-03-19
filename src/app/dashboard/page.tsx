@@ -114,11 +114,11 @@ export default async function DashboardPage() {
                   </div>
                   <div>
                     <h3 className="font-medium">{org.name}</h3>
-                    <p className="text-xs text-muted-foreground">
+                    <span className="text-xs text-muted-foreground">
                       <Badge variant="outline" className="text-[10px] py-0">
                         {org.role === 'owner' ? '所有者' : org.role === 'admin' ? '管理员' : '成员'}
                       </Badge>
-                    </p>
+                    </span>
                   </div>
                 </div>
                 <CreateProjectDialog organizationId={org.id} organizationName={org.name} />
