@@ -101,14 +101,25 @@ jobs:
       - name: Install dependencies
         run: yarn install --frozen-lockfile --ignore-engines
 
-      # 构建时注入必要的公开环境变量（非敏感信息）
+      # 构建时注入所有必要的环境变量
       - name: Build Next.js application
         run: yarn build
         env:
-          # Clerk 公开 Key（前端可见，可写入 CI）
+          NEXT_TELEMETRY_DISABLED: 1
+          # Clerk
           NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: ${{ secrets.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY }}
-          # 其他 NEXT_PUBLIC_* 变量在此添加
-          NEXT_TELEMETRY_DISABLED: 1  # 关闭 Next.js 匿名遥测
+          CLERK_SECRET_KEY: ${{ secrets.CLERK_SECRET_KEY }}
+          NEXT_PUBLIC_CLERK_SIGN_IN_URL: /sign-in
+          NEXT_PUBLIC_CLERK_SIGN_UP_URL: /sign-up
+          NEXT_PUBLIC_CLERK_AFTER_SIGN_IN_URL: /dashboard
+          NEXT_PUBLIC_CLERK_AFTER_SIGN_UP_URL: /dashboard
+          # Database
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          # Pusher
+          PUSHER_APP_ID: ${{ secrets.PUSHER_APP_ID }}
+          NEXT_PUBLIC_PUSHER_APP_KEY: ${{ secrets.NEXT_PUBLIC_PUSHER_APP_KEY }}
+          PUSHER_APP_SECRET: ${{ secrets.PUSHER_APP_SECRET }}
+          NEXT_PUBLIC_PUSHER_CLUSTER: ${{ secrets.NEXT_PUBLIC_PUSHER_CLUSTER }}
 
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4
