@@ -3,7 +3,7 @@ import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server'
 // 定义需要登录才能访问的保护路由
 const isProtectedRoute = createRouteMatcher([
   '/dashboard(.*)',
-  '/projects(.*)',
+  '/projects(.*)'
 ])
 
 export default clerkMiddleware(async (auth, req) => {
