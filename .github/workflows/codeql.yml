@@ -52,6 +52,7 @@ jobs:
         with:
           languages: ${{ matrix.language }}
           queries: security-extended # 比 default 更严格的查询套件
+          config-file: ./.github/codeql/codeql-config.yml
 
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v4

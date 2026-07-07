@@ -1,0 +1,10 @@
+# CodeQL 分析配置
+# 文档: https://docs.github.com/en/code-security/code-scanning/creating-an-advanced-setup-for-code-scanning/customizing-your-advanced-setup-for-code-scanning
+
+# 只扫描 src 目录（包含业务代码和漏洞测试代码）
+paths:
+  - src
+
+# 不排除任何子目录（默认行为会排除 __tests__ 等，这里显式清空）
+paths-ignore:
+  - node_modules
